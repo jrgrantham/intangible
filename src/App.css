@@ -1,16 +1,4 @@
-.App {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background-color: #DED721;
-  height: 100vh;
-}
 
-h1 {
-  padding-top: 15vh;
-  font-size: 8vw;
-  color: #2128DE;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
