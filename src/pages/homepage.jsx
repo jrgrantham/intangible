@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-
 export default function Homepage() {
   return (
     <Container>
-      <h1>intangible engineering</h1>
-      <p>site coming soon</p>
-      <a href="https://jamesgrantham.me">visit developer</a>
+      <div className="title">
+        <h1>intangible engineering</h1>
+        <p>site coming soon</p>
+        <a href="https://jamesgrantham.me">visit developer</a>
+      </div>
     </Container>
   );
 }
@@ -16,18 +17,23 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #DED721;
+  /* background-color: #DED721; */
   height: 100vh;
-  background-image: linear-gradient(#376b92, #376b92, #376b92, #51ae59);
 
-h1 {
-  padding-top: 15vh;
-  font-size: 8vw;
-  color: #2128DE;
-  color: white;
-}
+  .title {
+    color: #2128de;
+    color: white;
+    background-image: linear-gradient(to right, #376b92, #51ae59);
+    padding: 10vh 0;
 
-p, a {
-  color: white;
-}
+  }
+  h1 {
+    margin-bottom: 50px;
+    font-size: 8vw;
+  }
+
+  p,
+  a {
+    color: white;
+  }
 `;
