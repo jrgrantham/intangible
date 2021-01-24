@@ -18,7 +18,7 @@ export const Container = styled.div`
   text-align: center;
   background-color: #DED721;
   height: 100vh;
-  background-image: linear-gradient(red, yellow);
+  background-image: linear-gradient(#376b92, #376b92, #376b92, #51ae59);
 
 h1 {
   padding-top: 15vh;
