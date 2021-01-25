@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Homepage() {
-  const windowHeight = window.innerHeight;
+  const windowHeight = Math.max(window.innerHeight, window.innerWidth/2, 450);
+
+  console.log(window.innerHeight);
+  console.log(window.innerWidth);
 
   window.onresize = function () {
     window.location.reload();
@@ -11,7 +14,7 @@ export default function Homepage() {
   return (
     <Container style={{ height: `${windowHeight}px` }}>
       <h1>intangible engineering</h1>
-      <h3>WEB DEVELOPMENT SERVICE</h3>
+      <h3>WEB DEVELOPMENT SERVICES</h3>
       <a href="https://jamesgrantham.me">Visit the developer</a>
     </Container>
   );
