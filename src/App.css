@@ -1,4 +1,7 @@
+body {
+  background-color: #f1f1f1;
 
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
