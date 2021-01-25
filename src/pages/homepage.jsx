@@ -3,10 +3,6 @@ import styled from "styled-components";
 
 export default function Homepage() {
   const windowHeight = Math.max(window.innerHeight, window.innerWidth/2, 450);
-
-  console.log(window.innerHeight);
-  console.log(window.innerWidth);
-
   window.onresize = function () {
     window.location.reload();
   }
