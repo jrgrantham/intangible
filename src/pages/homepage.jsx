@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 const background1 = "#222222";
+// avg #1D3548 yusei magic
 const background2 = "#17486d";
 // const background2 = "#376b92";
 const color1 = "#fff";
