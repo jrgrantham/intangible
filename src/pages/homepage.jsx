@@ -105,10 +105,14 @@ export const Container = styled.div`
   h1 {
     font-size: max(7vw, 30px);
     margin: 20vh 0 10px 0;
+    /* transition: 0.5s;
+    &:hover {
+      color: black
+    } */
   }
 
   h3 {
-    font-size: max(2vw, 16px);
+    font-size: max(2.5vw, 16px);
     opacity: ${(props) => props.statementOpacity};
     transition: opacity 5s;
     margin: 40px;
