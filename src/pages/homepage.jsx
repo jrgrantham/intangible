@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 const background1 = "#202020";
 const background2 = "#17486d";
 const waveColors = [
-  "#c0c0c0",
+  "#a0a0a0",
   "#0000ff",
   "#ff0000",
   "limegreen",
@@ -41,8 +41,8 @@ export default function Homepage() {
   }
 
   useEffect(() => {
-    removeHiddenElements()
-  })
+    removeHiddenElements();
+  });
 
   return (
     <Container
@@ -52,17 +52,25 @@ export default function Homepage() {
       style={{ height: `${windowHeight}px` }}
     >
       <section className="waves-demo">
-        <button onClick={() => setColorSwap(!colorSwap)}>
+        <button>
           <h1
-            className="waves"
+            onClick={() => setColorSwap(!colorSwap)}
+            className="screen waves"
             onMouseOver={changeWaveColor}
             data-word="intangible engineering"
           >
             intangible engineering
           </h1>
+          <h1
+            onClick={changeWaveColor}
+            className="mobile waves"
+            data-word="intangible"
+          >
+            intangible
+          </h1>
         </button>
       </section>
-      <h3 id='slogan' className='hide'>
+      <h3 id="slogan" className="hide">
         WEB DEVELOPMENT SERVICES
         {/* <span className="vibrate">W</span>
         <span className="vibrate">E</span>
@@ -91,8 +99,8 @@ export default function Homepage() {
       </h3>
       {/* <h3>Providers of simple, intuitive and easy to use applications</h3> */}
       <a
-        id='toDeveloper'
-        className='hide'
+        id="toDeveloper"
+        className="hide"
         onMouseOver={() => mouseOverCompany()}
         onMouseLeave={() => mouseLeaveCompany()}
         href="https://jamesgrantham.me"
@@ -135,9 +143,9 @@ export const Container = styled.div`
     ${background1},
     ${background2}
   );
+
   .waves {
-    color: ${(props) =>
-      props.colorSwap ? (props) => props.waveColor : color};
+    color: ${(props) => (props.colorSwap ? (props) => props.waveColor : color)};
     /* -webkit-text-stroke: 1px #fff; */
     position: relative;
   }
@@ -151,13 +159,25 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    color: ${(props) =>
-      props.colorSwap ? color : (props) => props.waveColor};
+    color: ${(props) => (props.colorSwap ? color : (props) => props.waveColor)};
   }
+  .screen {
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
+  .mobile {
+    @media (min-width: 500px) {
+      display: none;
+      margin-top: 10vh;
+    }
+  }
+
   .hide {
     opacity: 0;
   }
   button {
+    text-align: center;
     display: inline-block;
     border: none;
     padding: 1rem 2rem;
@@ -172,6 +192,9 @@ export const Container = styled.div`
     margin: 0;
     font-size: max(7vw, 30px);
     cursor: pointer;
+    @media (max-width: 500px) {
+      font-size: max(14vw, 30px);
+    }
   }
 
   h3 {
@@ -179,33 +202,30 @@ export const Container = styled.div`
     font-size: max(2.5vw, 18px);
     /* opacity: ${(props) => props.statementOpacity}; */
     transition: opacity 5s;
-    margin: 40px;
-    color: ${(props) =>
-      props.colorSwap ? (props) => props.waveColor : color};
+    margin: 40px 10px;
+    color: ${(props) => (props.colorSwap ? (props) => props.waveColor : color)};
+    @media (max-width: 500px) {
+      margin-top: 20px
+    }
   }
   a {
     opacity: ${(props) => props.buttonOpacity};
     text-align: center;
     margin-top: 25vh;
     text-decoration: none;
-    color: ${(props) =>
-      props.colorSwap ? (props) => props.waveColor : color};
+    color: ${(props) => (props.colorSwap ? (props) => props.waveColor : color)};
     border: 1px solid
-      ${(props) =>
-        props.colorSwap ? (props) => props.waveColor : color};
+      ${(props) => (props.colorSwap ? (props) => props.waveColor : color)};
     border-radius: 5px;
     padding: 0.6rem 1.6rem;
     transition: opacity 4s, background-color 0.5s;
     font-weight: bold;
     &:hover {
-      /* opacity: 0.5; */
-      border: 1px solid
-        ${(props) =>
-          props.colorSwap
-            ? color
-            : (props) => props.waveColor};
       background-color: ${(props) =>
         props.colorSwap ? color : (props) => props.waveColor};
+    }
+    @media (max-width: 500px) {
+      margin-top: 15vh;
     }
   }
 `;
