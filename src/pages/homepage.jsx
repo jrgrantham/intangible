@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
-const background1 = "#101010";
+const background1 = "#202020";
 const background2 = "#17486d";
 const waveColors = [
-  "#65a3cf",
-  "red",
+  "#c0c0c0",
+  "#0000ff",
+  "#ff0000",
   "limegreen",
-  "dodgerblue",
-  "magenta",
+  "#ff00ff",
   "orange",
 ];
-const colors = [
- "white",
- "#a0a0a0",
-];
+const color = "white";
 
 export default function Homepage() {
   const windowHeight = Math.max(window.innerHeight, window.innerWidth / 2, 450);
@@ -23,45 +20,39 @@ export default function Homepage() {
   };
 
   const [animationState, setAnimationState] = useState("running");
-  const [statementOpacity, setStatementOpacity] = useState(0);
-  const [buttonOpacity, setButtonOpacity] = useState(0);
   const [waveColor, setWaveColor] = useState(0);
-  const [color, setColor] = useState(0);
+  const [colorSwap, setColorSwap] = useState(false);
 
-  function titleOver() {
+  function mouseOverCompany() {
     setAnimationState("paused");
   }
-  function titleLeave() {
+  function mouseLeaveCompany() {
     setAnimationState("running");
   }
-
   function changeWaveColor() {
     setWaveColor((waveColor + 1) % waveColors.length);
   }
 
-  function changeColor() {
-    setColor((color + 1) % colors.length);
+  function removeHiddenElements() {
+    document.getElementById("slogan").classList.remove("hide");
+    setTimeout(() => {
+      document.getElementById("toDeveloper").classList.remove("hide");
+    }, 2000);
   }
 
-  setTimeout(() => {
-    setStatementOpacity(1);
-  }, 1500);
-
-  setTimeout(() => {
-    setButtonOpacity(1);
-  }, 4000);
+  useEffect(() => {
+    removeHiddenElements()
+  })
 
   return (
     <Container
       animationState={animationState}
-      statementOpacity={statementOpacity}
-      buttonOpacity={buttonOpacity}
+      colorSwap={colorSwap}
       waveColor={waveColors[waveColor]}
-      color={colors[color]}
       style={{ height: `${windowHeight}px` }}
     >
       <section className="waves-demo">
-        <button onClick={changeColor}>
+        <button onClick={() => setColorSwap(!colorSwap)}>
           <h1
             className="waves"
             onMouseOver={changeWaveColor}
@@ -71,8 +62,9 @@ export default function Homepage() {
           </h1>
         </button>
       </section>
-      <h3>
-        <span className="vibrate">W</span>
+      <h3 id='slogan' className='hide'>
+        WEB DEVELOPMENT SERVICES
+        {/* <span className="vibrate">W</span>
         <span className="vibrate">E</span>
         <span className="vibrate">B</span>
         <span> </span>
@@ -95,12 +87,14 @@ export default function Homepage() {
         <span className="vibrate">I</span>
         <span className="vibrate">C</span>
         <span className="vibrate">E</span>
-        <span className="vibrate">S</span>
+        <span className="vibrate">S</span> */}
       </h3>
       {/* <h3>Providers of simple, intuitive and easy to use applications</h3> */}
       <a
-        onMouseOver={() => titleOver()}
-        onMouseLeave={() => titleLeave()}
+        id='toDeveloper'
+        className='hide'
+        onMouseOver={() => mouseOverCompany()}
+        onMouseLeave={() => mouseLeaveCompany()}
         href="https://jamesgrantham.me"
       >
         the developer
@@ -142,7 +136,8 @@ export const Container = styled.div`
     ${background2}
   );
   .waves {
-    color: ${(props) => props.color};
+    color: ${(props) =>
+      props.colorSwap ? (props) => props.waveColor : color};
     /* -webkit-text-stroke: 1px #fff; */
     position: relative;
   }
@@ -156,11 +151,11 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    color: ${(props) => props.waveColor};
+    color: ${(props) =>
+      props.colorSwap ? color : (props) => props.waveColor};
   }
-  .vibrate:hover {
-    /* text-shadow: 2px 2px 30px #fff,
-                 2px 2px 80px #fff */
+  .hide {
+    opacity: 0;
   }
   button {
     display: inline-block;
@@ -180,26 +175,37 @@ export const Container = styled.div`
   }
 
   h3 {
-    font-size: max(2.5vw, 16px);
-    opacity: ${(props) => props.statementOpacity};
+    text-align: center;
+    font-size: max(2.5vw, 18px);
+    /* opacity: ${(props) => props.statementOpacity}; */
     transition: opacity 5s;
     margin: 40px;
-    color: ${(props) => props.color};
+    color: ${(props) =>
+      props.colorSwap ? (props) => props.waveColor : color};
   }
   a {
     opacity: ${(props) => props.buttonOpacity};
     text-align: center;
     margin-top: 25vh;
     text-decoration: none;
-    color: ${(props) => props.color};
-    border: 1px solid ${(props) => props.color};
+    color: ${(props) =>
+      props.colorSwap ? (props) => props.waveColor : color};
+    border: 1px solid
+      ${(props) =>
+        props.colorSwap ? (props) => props.waveColor : color};
     border-radius: 5px;
     padding: 0.6rem 1.6rem;
-    transition: background-color 0.5s;
+    transition: opacity 4s, background-color 0.5s;
     font-weight: bold;
     &:hover {
-      border: 1px solid ${(props) => props.color};
-      background-color: ${(props) => props.waveColor};
+      /* opacity: 0.5; */
+      border: 1px solid
+        ${(props) =>
+          props.colorSwap
+            ? color
+            : (props) => props.waveColor};
+      background-color: ${(props) =>
+        props.colorSwap ? color : (props) => props.waveColor};
     }
   }
 `;
