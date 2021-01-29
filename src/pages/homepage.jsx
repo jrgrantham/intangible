@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
-const background1 = "#222222";
-// avg #1D3548 yusei magic
+const background1 = "#202020";
 const background2 = "#17486d";
-// const background2 = "#376b92";
-const color1 = "#fff";
-const color2 = "#65a3cf";
+const waveColors = [
+  "#c0c0c0",
+  "#0000ff",
+  "#ff0000",
+  "limegreen",
+  "#ff00ff",
+  "orange",
+];
+const color = "white";
 
 export default function Homepage() {
   const windowHeight = Math.max(window.innerHeight, window.innerWidth / 2, 450);
@@ -15,44 +20,85 @@ export default function Homepage() {
   };
 
   const [animationState, setAnimationState] = useState("running");
-  const [statementOpacity, setStatementOpacity] = useState(0);
-  const [buttonOpacity, setButtonOpacity] = useState(0);
+  const [waveColor, setWaveColor] = useState(0);
+  const [colorSwap, setColorSwap] = useState(false);
 
-  function titleOver() {
+  function mouseOverCompany() {
     setAnimationState("paused");
   }
-  function titleLeave() {
+  function mouseLeaveCompany() {
     setAnimationState("running");
   }
+  function changeWaveColor() {
+    setWaveColor((waveColor + 1) % waveColors.length);
+  }
 
-  setTimeout(() => {
-    setStatementOpacity(1);
-  }, 1500);
+  function removeHiddenElements() {
+    document.getElementById("slogan").classList.remove("hide");
+    setTimeout(() => {
+      document.getElementById("toDeveloper").classList.remove("hide");
+    }, 2000);
+  }
 
-  setTimeout(() => {
-    setButtonOpacity(1);
-  }, 4000);
+  useEffect(() => {
+    removeHiddenElements()
+  })
 
   return (
     <Container
       animationState={animationState}
-      statementOpacity={statementOpacity}
-      buttonOpacity={buttonOpacity}
+      colorSwap={colorSwap}
+      waveColor={waveColors[waveColor]}
       style={{ height: `${windowHeight}px` }}
     >
       <section className="waves-demo">
-        <h1
-          className="waves"
-          data-word="intangible engineering"
-          onMouseOver={() => titleOver()}
-          onMouseLeave={() => titleLeave()}
-        >
-          intangible engineering
-        </h1>
+        <button onClick={() => setColorSwap(!colorSwap)}>
+          <h1
+            className="waves"
+            onMouseOver={changeWaveColor}
+            data-word="intangible engineering"
+          >
+            intangible engineering
+          </h1>
+        </button>
       </section>
-      <h3>WEB DEVELOPMENT SERVICES</h3>
+      <h3 id='slogan' className='hide'>
+        WEB DEVELOPMENT SERVICES
+        {/* <span className="vibrate">W</span>
+        <span className="vibrate">E</span>
+        <span className="vibrate">B</span>
+        <span> </span>
+        <span className="vibrate">D</span>
+        <span className="vibrate">E</span>
+        <span className="vibrate">V</span>
+        <span className="vibrate">E</span>
+        <span className="vibrate">L</span>
+        <span className="vibrate">O</span>
+        <span className="vibrate">P</span>
+        <span className="vibrate">M</span>
+        <span className="vibrate">E</span>
+        <span className="vibrate">N</span>
+        <span className="vibrate">T</span>
+        <span> </span>
+        <span className="vibrate">S</span>
+        <span className="vibrate">E</span>
+        <span className="vibrate">R</span>
+        <span className="vibrate">V</span>
+        <span className="vibrate">I</span>
+        <span className="vibrate">C</span>
+        <span className="vibrate">E</span>
+        <span className="vibrate">S</span> */}
+      </h3>
       {/* <h3>Providers of simple, intuitive and easy to use applications</h3> */}
-      <a href="https://jamesgrantham.me">the developer</a>
+      <a
+        id='toDeveloper'
+        className='hide'
+        onMouseOver={() => mouseOverCompany()}
+        onMouseLeave={() => mouseLeaveCompany()}
+        href="https://jamesgrantham.me"
+      >
+        the developer
+      </a>
     </Container>
   );
 }
@@ -84,9 +130,14 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(to top right, ${background1}, ${background2});
+  background-image: linear-gradient(
+    to top right,
+    ${background1},
+    ${background2}
+  );
   .waves {
-    color: ${color1};
+    color: ${(props) =>
+      props.colorSwap ? (props) => props.waveColor : color};
     /* -webkit-text-stroke: 1px #fff; */
     position: relative;
   }
@@ -100,38 +151,61 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    color: ${color2};
+    color: ${(props) =>
+      props.colorSwap ? color : (props) => props.waveColor};
+  }
+  .hide {
+    opacity: 0;
+  }
+  button {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    margin: 20vh 0 10px 0;
   }
   h1 {
+    margin: 0;
     font-size: max(7vw, 30px);
-    margin: 20vh 0 10px 0;
-    /* transition: 0.5s;
-    &:hover {
-      color: black
-    } */
+    cursor: pointer;
   }
 
   h3 {
-    font-size: max(2.5vw, 16px);
-    opacity: ${(props) => props.statementOpacity};
+    text-align: center;
+    font-size: max(2.5vw, 18px);
+    /* opacity: ${(props) => props.statementOpacity}; */
     transition: opacity 5s;
     margin: 40px;
-    color: ${color1};
+    color: ${(props) =>
+      props.colorSwap ? (props) => props.waveColor : color};
   }
   a {
     opacity: ${(props) => props.buttonOpacity};
     text-align: center;
     margin-top: 25vh;
     text-decoration: none;
-    color: ${color1};
-    border: 1px solid ${color1};
+    color: ${(props) =>
+      props.colorSwap ? (props) => props.waveColor : color};
+    border: 1px solid
+      ${(props) =>
+        props.colorSwap ? (props) => props.waveColor : color};
     border-radius: 5px;
     padding: 0.6rem 1.6rem;
-    transition: all 0.5s;
+    transition: opacity 4s, background-color 0.5s;
     font-weight: bold;
     &:hover {
-      border: 1px solid ${color1};
-      background-color: ${background2};
+      /* opacity: 0.5; */
+      border: 1px solid
+        ${(props) =>
+          props.colorSwap
+            ? color
+            : (props) => props.waveColor};
+      background-color: ${(props) =>
+        props.colorSwap ? color : (props) => props.waveColor};
     }
   }
 `;
